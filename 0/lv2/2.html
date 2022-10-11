@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>css</title>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+
+			.outside {
+				height: 300px;
+				width: 600px;
+				background-color: aqua;
+				margin: 0 auto;
+				margin-top: 10%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.middle1 {
+				height: 40px;
+				width: 200px;
+				text-align: center;
+			}
+
+			.middle2 {
+				height: 100px;
+				width: 300px;
+				border-radius: 20px;
+				text-align: center;
+				background-color: aquamarine;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.middle3 {
+				height: 40px;
+				width: 200px;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				text-align: center;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.middle4 {
+				height: 100px;
+				width: 600px;
+				display: flex;
+				justify-content: space-between;
+			}
+
+			.inside1 {
+				height: 80px;
+				width: 160px;
+				border-radius: 20px;
+				background-color: blanchedalmond;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.inside3 {
+				height: 80px;
+				width: 160px;
+				border-radius: 20px;
+				background-color: blanchedalmond;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="outside">
+			<h2 class="middle1">上</h2>
+			<div class="middle2">
+				<div>中</div>
+			</div>
+			<div class="middle3">
+				<div>下</div>
+			</div>
+			<div class="middle4">
+				<div class="inside1">
+					<div>左</div>
+				</div>
+				<div class="inside2">底下中间</div>
+				<div class="inside3">
+					<div>右</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,109 @@
+.button-shadow {
+	height: 76px;
+	width: 188px;
+	border-radius: 38px;
+	position: absolute;
+	top: 31px;
+	left: 17px;
+	z-index: -2;
+	transition: 0.5s;
+}
+.button-shadow-hover {
+	height: 76px;
+	width: 188px;
+	border-radius: 38px;
+	position: absolute;
+	top: 31px;
+	left: 17px;
+	z-index: -2;
+	transition: 0.5s;
+	cursor: pointer;
+	box-shadow: yellow 0 0 40px;
+	transition: 0.5s;
+}
+
+.button-holder {
+	height: 76px;
+	width: 188px;
+	border-radius: 38px;
+	position: absolute;
+	top: 31px;
+	left: 17px;
+	z-index: 4;
+	cursor: pointer;
+}
+
+.goldship2 {
+	height: 80px;
+	width: 80px;
+	top: 2px;
+	left: 40px;
+	position: absolute;
+	background-image: url(./picture/goldship2.png);
+	background-size: 94px;
+	animation: goldship2Animate;
+	animation-delay: 0s;
+	animation-duration: 0.4s;
+}
+@keyframes goldship2Animate {
+	0% {
+		transform-origin: bottom right 60px;
+	}
+	50% {
+		scale: 1.4;
+		transform-origin: bottom right 60px;
+	}
+	100% {
+		scale: 1;
+		transform-origin: bottom right 60px;
+	}
+}
+
+.button-box2 {
+	height: 90px;
+	width: 90px;
+	left: 120px;
+	top: -1px;
+	position: absolute;
+	background-image: url(./picture/报酬箱子打开.png);
+	background-repeat: no-repeat;
+	background-size: 100px;
+	background-position: -20px -4px;
+	animation: buttonBox2Animate;
+	animation-delay: 0s;
+	animation-duration: 0.4s;
+}
+@keyframes buttonBox2Animate {
+	0% {
+		transform-origin: bottom left 60px;
+	}
+	50% {
+		scale: 1.4;
+		transform-origin: bottom left 60px;
+	}
+	100% {
+		scale: 1;
+		transform-origin: bottom left 60px;
+	}
+}
+
+.button-p {
+	height: 140px;
+	width: 220px;
+	background-image: url(./picture/button.png);
+	background-size: 190px;
+	background-repeat: no-repeat;
+	background-position: 16px 30px;
+	position: relative;
+	animation: buttonAnimate;
+	animation-delay: 0s;
+	animation-duration: 0.4s;
+}
+@keyframes buttonAnimate {
+	50% {
+		scale: 0.9;
+	}
+	100% {
+		scale: 1;
+	}
+}

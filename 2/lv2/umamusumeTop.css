@@ -1,0 +1,112 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.main {
+	height: 600px;
+	width: 400px;
+	box-shadow: gray 0 0 20px;
+}
+
+.background {
+	height: 300px;
+	width: 400px;
+	background-image: url(./picture/background.png);
+	background-size: 600px;
+	background-position: -100px 0;
+	position: absolute;
+	z-index: -1;
+}
+
+.top {
+	height: 300px;
+	width: 400px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.title {
+	width: 300px;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+.goldship {
+	width: 160px;
+}
+
+.racecard {
+	width: 360px;
+	height: 56px;
+	border: solid 1px #51961d;
+	border-radius: 5px;
+	background-color: white;
+	display: flex;
+}
+
+.race1,
+.race2,
+.race3,
+.race4,
+.race5 {
+	width: 72px;
+	height: 56px;
+	border: none;
+}
+
+.race1 div:nth-child(1),
+.race2 div:nth-child(1),
+.race3 div:nth-child(1),
+.race4 div:nth-child(1),
+.race5 div:nth-child(1) {
+	height: 20px;
+	background-color: #79da34;
+	text-align: center;
+	font-size: 14px;
+	font-weight: bolder;
+	color: white;
+	text-shadow: 0 0 2px black;
+}
+.race1 div:nth-child(1) {
+	border-radius: 5px 0 0 0;
+}
+.race5 div:nth-child(1) {
+	border-radius: 0 5px 0 0;
+}
+.race2 div:nth-child(1),
+.race3 div:nth-child(1),
+.race4 div:nth-child(1),
+.race5 div:nth-child(1) {
+	border-left: dotted #51961d 1px;
+}
+
+.race2 div:nth-child(2),
+.race3 div:nth-child(2),
+.race4 div:nth-child(2),
+.race5 div:nth-child(2) {
+	height: 36px;
+	border-left: dotted #51961d 1px;
+}
+.race1 div img,
+.race2 div img,
+.race3 div img,
+.race4 div img,
+.race5 div img {
+	height: 20px;
+	margin-top: 10px;
+	margin-left: 10px;
+}

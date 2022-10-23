@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			html,
+			body {
+				height: 100%;
+				width: 100%;
+				display: flex;
+				align-items: center;
+			}
+
+			.box1,
+			.box2,
+			.box3,
+			.box4 {
+				width: 320px;
+				margin-left: 20px;
+			}
+
+			.box1 {
+				height: 500px;
+				border: solid 1px black;
+				flex-grow: 0;
+				flex-shrink: 0;
+			}
+
+			.box2 {
+				height: 300px;
+				border: solid 1px black;
+				flex-grow: 1;
+				flex-shrink: 1;
+			}
+
+			.box3 {
+				height: 100px;
+				border: solid 1px black;
+				align-self: flex-start;
+				flex-grow: 0;
+				flex-shrink: 1;
+			}
+
+			.box4 {
+				height: 600px;
+				border: solid 1px black;
+				flex-grow: 0;
+				flex-shrink: 2;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box1">
+			一号盒子
+			<p>我始终保持原大小，不缩放。</p>
+		</div>
+		<div class="box2">
+			二号盒子
+			<p>浏览器界面变宽时，我占满其他元素剩下的所有空间</p>
+		</div>
+
+		<div class="box3">
+			三号盒子
+			<p>我和四号盒子的顶部对齐</p>
+		</div>
+		<div class="box4">
+			四号盒子
+			<p>浏览器界面变窄时，我缩窄的速度要比二、三号盒子快</p>
+		</div>
+		<script>
+			let box3 = document.querySelector('.box3');
+			let box4 = document.querySelector('.box4');
+			box3.style.marginTop = box4.offsetTop + 'px';
+			window.addEventListener('resize', () => {
+				box3.style.marginTop = box4.offsetTop + 'px';
+			});
+		</script>
+	</body>
+</html>

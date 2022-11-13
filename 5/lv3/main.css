@@ -50,6 +50,6 @@ body {
 	font-size: 4px;
 }
 
-.send > .message-text {
+.send > .send-message-text {
 	height: 120px;
 }

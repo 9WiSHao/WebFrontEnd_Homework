@@ -1,0 +1,55 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.main {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+@media screen and (min-width: 800px) {
+	.main {
+		width: 800px;
+	}
+}
+
+.head {
+	width: 200px;
+
+	text-align: center;
+	font-weight: 800;
+	color: gray;
+}
+
+.message-body {
+	width: calc(100% - 16px);
+}
+
+.send {
+	width: calc(100% - 16px);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.send > * {
+	width: 100%;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	font-size: 4px;
+}
+
+.send > .message-text {
+	height: 120px;
+}

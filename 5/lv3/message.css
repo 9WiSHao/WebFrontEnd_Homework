@@ -1,0 +1,55 @@
+.messages > * {
+	margin-top: 6px;
+}
+
+.message-top {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.message-top-left {
+	display: flex;
+}
+
+.message-name {
+	font-weight: 700;
+	margin-right: 16px;
+}
+
+.message-time1,
+.message-time2 {
+	margin-right: 6px;
+	font-size: x-small;
+	color: gray;
+	line-height: 22px;
+	margin-right: 6px;
+}
+
+.message-top-right {
+	font-size: x-small;
+	color: gray;
+	line-height: 22px;
+}
+
+.message-text {
+	font-size: small;
+	word-break: break-all;
+}
+
+.message-bottom {
+	display: flex;
+	justify-content: end;
+}
+
+.delete {
+	font-size: x-small;
+	color: gray;
+	line-height: 22px;
+	cursor: pointer;
+}
+
+.line {
+	width: 100%;
+	border-top: solid 1px rgb(199, 199, 199);
+}

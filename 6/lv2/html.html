@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>打字机效果</title>
+		<style>
+			html::before {
+				content: '';
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				z-index: -1;
+				background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%) no-repeat;
+			}
+
+			.main {
+				height: 600px;
+				width: 800px;
+				margin: 80px auto;
+				box-shadow: 4px 4px 12px 2px gray;
+				background-color: #fff;
+			}
+
+			.head {
+				height: 120px;
+				width: 800px;
+				padding-top: 20px;
+				background-color: #fff;
+				text-align: center;
+				font-size: 40px;
+				font-family: STFangsong;
+			}
+
+			.body {
+				height: 460px;
+				width: 520px;
+				margin: 0 auto;
+				background-color: #fff;
+				font-size: large;
+				font-family: SimSun;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="main">
+			<div class="head">《记承天寺夜游》</div>
+			<div class="body"></div>
+		</div>
+		<script src="js.js"></script>
+	</body>
+</html>

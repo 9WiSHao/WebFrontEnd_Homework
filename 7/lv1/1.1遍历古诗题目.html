@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>古诗题目一览</title>
+	</head>
+	<body>
+		<div></div>
+
+		<script>
+			const url = 'https://taskapi.chovrio.club/';
+			const div = document.querySelector('div');
+			async function simpleGet2(url, num) {
+				// 一个携带query参数的get请求来获取一首诗的题目，id是从0开始的数字
+				let result = await fetch(`${url}/poetry/${num}`, {
+					method: 'GET',
+				});
+				let message = await result.json();
+				if (message.code != 200) {
+					console.log(message.message);
+				} else {
+					div.innerHTML += `${num}、${message.title}</br>`;
+					console.log(message);
+				}
+			}
+			// 遍历所有诗的题目
+			(async function () {
+				for (let i = 0; i <= 100000; i++) {
+					await new Promise((r) => {
+						setTimeout(() => {
+							simpleGet2(url, i);
+							r();
+						}, 20);
+					});
+				}
+			})();
+
+			// 读取到的信息（挑个自己喜欢的诗）
+			// 6876将进酒
+			// {
+			//   "code": 200,
+			//   "title": "将进酒",
+			//   "result": {
+			//     "tip": "lv1:拿着这个title作为params参数搜索古诗(直接用诗歌名字替换下面的title=?的?即可)",
+			//     "example": "https://taskapi.chovrio.club/poetry?title=?"
+			//   }
+			// }
+		</script>
+	</body>
+</html>

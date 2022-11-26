@@ -1,0 +1,42 @@
+###
+GET https://taskapi.chovrio.club/ HTTP/1.1
+
+# {
+#   "code": 200,
+#   "message": "恭喜你成功发送了一个最简单的GET请求",
+#   "result": {
+#     "tip": "lv1：蒸汽人突然想吟诗一首，请你立即使用下面的接口发送一个携带query参数的get请求获得一首诗歌的题目,id是从1开始的数字最大只有2528(好像)",
+#     "url": "https://taskapi.chovrio.club/poetry/:id"
+#   }
+# }
+
+###
+GET https://taskapi.chovrio.club/poetry/6876
+
+# {
+#   "code": 200,
+#   "title": "将进酒",
+#   "result": {
+#     "tip": "lv1:拿着这个title作为params参数搜索古诗(直接用诗歌名字替换下面的title=?的?即可)",
+#     "example": "https://taskapi.chovrio.club/poetry?title=?"
+#   }
+# }
+
+###
+GET https://taskapi.chovrio.club/poetry
+    ?title=将进酒
+
+# {
+#   "code": 200,
+#   "title": "将进酒",
+#   "content": "君不见黄河之水天上来，奔流到海不复回。君不见高堂明镜悲白发，朝如青丝暮成雪。人生得意须尽欢，莫使金樽空对月。天生我材必有用，千金散尽还复来。烹羊宰牛且为乐，会须一饮三百杯。岑夫子，丹丘生，将进酒，君莫停。与君歌一曲，请君为我侧耳听。钟鼓馔玉不足贵，但愿长醉不愿醒。古来圣贤皆寂寞，惟有饮者留其名。陈王昔时宴平乐，斗酒十千恣欢谑。主人何为言少钱，径须沽取对君酌。五花马，千金裘，呼儿将出换美酒，与尔同销万古愁。",
+#   "result": {
+#     "message": "lv2:恭喜你完成了lv1，获得一张在线聊天券，但是你并没有账号誒，请通过下方接口，发送一个携带body参数的post请求以注册账号",
+#     "url": "https://taskapi.chovrio.club/users/register",
+#     "bodyType": {
+#       "username": "string",
+#       "password": "string"
+#     },
+#     "tip": "没有头绪就按照我课上增加对象那么写就可以了，把content改成password即可，后续登录也是同样的方法。"
+#   }
+# }

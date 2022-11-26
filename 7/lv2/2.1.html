@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>注册</title>
+	</head>
+	<body>
+		用户名<input type="text" class="username" /> <br />
+		密码<input type="text" class="password" /> <br />
+		<button class="register">注册</button>
+
+		<script>
+			const username = document.querySelector('.username');
+			const password = document.querySelector('.password');
+			const button = document.querySelector('.register');
+			const url = 'https://taskapi.chovrio.club/';
+
+			async function regiser() {
+				// 使用普通对象再转换
+				// let inputObj = {
+				// 	username: `${username.value}`,
+				// 	password: `${password.value}`,
+				// };
+
+				// 使用FormData表单
+				inputObj = new FormData();
+				inputObj.append('username', `${username.value}`);
+				inputObj.append('password', `${password.value}`);
+
+				let res = await fetch(`${url}users/register`, {
+					method: 'POST',
+
+					// body: JSON.stringify(inputObj),
+					body: inputObj,
+				});
+				let message = await res.json();
+				console.log(message);
+			}
+
+			button.addEventListener('click', regiser);
+
+			// {
+			//     "code": 200,
+			//     "message": "用户注册成功",
+			//     "result": {
+			//         "id": 22,
+			//         "username": "wishao",
+			//         "password": "这东西你得自己记，别来问我😉", // wang123
+			//         "lv2": "账号注册成功了，接下来让我们使用下方接口发送一个携带body参数的post请求进行登录来获得身份凭证吧",
+			//         "url": "https://taskapi.chovrio.club/users/login",
+			//         "bodyType": {
+			//             "username": "string",
+			//             "password": "string"
+			//         }
+			//     }
+			// }
+
+			// {
+			//     "code": 200,
+			//     "message": "用户注册成功",
+			//     "result": {
+			//         "id": 23,
+			//         "username": "9wishao",
+			//         "password": "这东西你得自己记，别来问我😉", // wang123
+			//         "lv2": "账号注册成功了，接下来让我们使用下方接口发送一个携带body参数的post请求进行登录来获得身份凭证吧",
+			//         "url": "https://taskapi.chovrio.club/users/login",
+			//         "bodyType": {
+			//             "username": "string",
+			//             "password": "string"
+			//         }
+			//     }
+			// }
+		</script>
+	</body>
+</html>

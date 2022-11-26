@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>0</title>
+	</head>
+	<body>
+		<button>获取lv0信息</button>
+		<div></div>
+		<script>
+			const button = document.querySelector('button');
+			const div = document.querySelector('div');
+			const url = 'https://taskapi.chovrio.club/';
+
+			async function simpleGet(url) {
+				let result = await fetch(url, {
+					method: 'GET',
+				});
+				let message = await result.json();
+				console.log(message);
+
+				div.innerHTML = JSON.stringify(message);
+			}
+
+			button.addEventListener('click', () => {
+				simpleGet(url);
+			});
+
+			// 获取到的信息
+			// {
+			//   "code": 200,
+			//   "message": "恭喜你成功发送了一个最简单的GET请求",
+			//   "result": {
+			//     "tip": "lv1：蒸汽人突然想吟诗一首，请你立即使用下面的接口发送一个携带query参数的get请求获得一首诗歌的题目,id是从1开始的数字最大只有2528(好像)",
+			//     "url": "https://taskapi.chovrio.club/poetry/:id"
+			//   }
+			// }
+		</script>
+	</body>
+</html>

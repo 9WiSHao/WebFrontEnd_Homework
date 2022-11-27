@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>登录</title>
+	</head>
+	<body>
+		用户名<input type="text" class="username" /> <br />
+		密码<input type="text" class="password" /> <br />
+		<button class="loginB">登录</button>
+
+		<script>
+			const username = document.querySelector('.username');
+			const password = document.querySelector('.password');
+			const button = document.querySelector('.loginB');
+			const url = 'https://taskapi.chovrio.club/';
+
+			async function login() {
+				inputObj = new FormData();
+				inputObj.append('username', `${username.value}`);
+				inputObj.append('password', `${password.value}`);
+
+				let res = await fetch(`${url}users/login`, {
+					method: 'POST',
+					body: inputObj,
+				});
+				let message = await res.json();
+				console.log(message);
+			}
+
+			button.addEventListener('click', login);
+
+			// {
+			//     "code": 200,
+			//     "message": "用户登录成功",
+			//     "result": {
+			//         "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMsInVzZXJuYW1lIjoiOXdpc2hhbyIsImF2YXRhciI6IiIsImlhdCI6MTY2OTUyMzA2NiwiZXhwIjoxNjcyMTE1MDY2fQ.mLlIjvheLBai46CzZ5hg4xWH3cv2LNEJbeir5kcUFyY",
+			//         "tip": "一段神奇的字符，在请求头中携带它吧😀",
+			//         "lv3": "你已经获得了最重要的道具，聊天室身份密钥，在下方接口中发送get请求并且在请求头中设置Authorization属性为token来获得聊天室地址吧",
+			//         "url": "https://taskapi.chovrio.club/chatroom"
+			//     }
+			// }
+		</script>
+	</body>
+</html>

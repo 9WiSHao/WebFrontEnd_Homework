@@ -1,0 +1,120 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.main {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+@media screen and (min-width: 800px) {
+	.main {
+		width: 800px;
+	}
+}
+
+.head {
+	width: 200px;
+	text-align: center;
+	font-weight: 800;
+	color: gray;
+}
+
+.message-body {
+	width: calc(100% - 16px);
+}
+
+.messages > * {
+	margin-top: 6px;
+}
+
+.message-top {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.message-top-left {
+	display: flex;
+}
+
+.message-name {
+	font-weight: 700;
+	margin-right: 16px;
+}
+
+.message-time1,
+.message-time2 {
+	margin-right: 6px;
+	font-size: x-small;
+	color: gray;
+	line-height: 22px;
+	margin-right: 6px;
+}
+
+.message-top-right {
+	font-size: x-small;
+	color: gray;
+	line-height: 22px;
+}
+
+.message-middle {
+	width: 100%;
+	display: flex;
+}
+
+.avatar {
+	height: 60px;
+	width: 60px;
+	border: solid 1px gray;
+	margin-right: 10px;
+}
+
+.avatar img {
+	height: 60px;
+	width: 60px;
+}
+
+.message-text {
+	font-size: small;
+	word-break: break-all;
+}
+
+.message-bottom {
+	display: flex;
+	justify-content: end;
+}
+
+.line {
+	width: 100%;
+	border-top: solid 1px rgb(199, 199, 199);
+}
+
+.send {
+	width: calc(100% - 16px);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.send > * {
+	width: 100%;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	font-size: 4px;
+}
+
+.send > .send-message-text {
+	height: 120px;
+}

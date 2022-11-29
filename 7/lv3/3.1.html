@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="main"></div>
+		<script>
+			const main = document.querySelector('.main');
+			const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMsInVzZXJuYW1lIjoiOXdpc2hhbyIsImF2YXRhciI6IiIsImlhdCI6MTY2OTUyMzA2NiwiZXhwIjoxNjcyMTE1MDY2fQ.mLlIjvheLBai46CzZ5hg4xWH3cv2LNEJbeir5kcUFyY`;
+			const url = `https://taskapi.chovrio.club/`;
+
+			async function getkey(url, token) {
+				let message = await fetch(`${url}chatroom`, {
+					method: 'GET',
+					headers: {
+						Authorization: `${token}`,
+					},
+				});
+				let messageText = await message.text();
+				console.log(messageText);
+				main.innerHTML = messageText;
+			}
+
+			getkey(url, token);
+
+			//             <!DOCTYPE html>
+			// <style>
+			//   .box {
+			//     position: absolute;
+			//     width: 400px;
+			//     height: 800px;
+			//     background-color: skyblue;
+			//   }
+
+			//   .User {
+			//     margin-top: 20px;
+			//   }
+			//   .Url {
+			//     width: 50px;
+			//     height: 50px;
+			//   }
+			// </style>
+			// <html>
+			//   <body>
+			//     <div>
+			//       <h1>聊天室</h1>
+			//       <h2>一些介绍：https://chovrio.club/chatroom/</h2>
+			//       <div class="box">
+			//         <input type="text" />
+			//         <button>发送消息</button>
+			//       </div>
+			//     </div>
+			//     <script>
+			//       const ws = new WebSocket("ws://chatroom.chovrio.club/"); // 监听地址端口号
+			//       // 建立连接后
+			//       ws.onopen = function () {
+			//         console.log("服务器连接");
+			//       };
+			//       // 服务器发送数据后
+			//       ws.onmessage = ({ data }) => {
+			//         const resData = JSON.parse(data);
+			//         console.log("服务端发过来数据", resData);
+			//         const div = document.createElement("div");
+			//         div.className = "User";
+			//         const img = document.createElement("img");
+			//         img.className = "Url";
+			//         img.src = resData.url;
+			//         const name = document.createElement("div");
+			//         name.innerHTML = resData.nickname;
+			//         div.append(name);
+			//         div.append(img);
+			//         document.querySelector(".box").append(div);
+			//       };
+			//       // 服务器关闭后
+			//       ws.onclose = () => {
+			//         console.log("服务器关闭");
+			//       };
+			//       // 昵称修改
+			//       function nickUpdateClick(name) {
+			//         if (ws.readyState === WebSocket.OPEN) {
+			//           ws.send(JSON.stringify(name));
+			//         }
+			//       }
+
+			//       // 发送消息
+			//       function sendMessageClick(msg) {
+			//         if (ws.readyState === WebSocket.OPEN) {
+			//           ws.send(JSON.stringify(msg));
+			//         }
+			//       }
+
+			//       document.querySelector("button").addEventListener("click", () => {
+			//         console.log(111);
+			//         sendMessageClick(document.querySelector("input").value);
+			//       });
+			//     /script>
+			//   /body>
+			// /html>
+			// lv3其实做不做都无所谓的，简单说一下lv3吧。lv3其实是一个在线聊天室，在/chatroom那个接口里面我已经返回了我写好的一些内容，有兴趣的同学可以自行将它完善成一个真正的聊天室(写写样式就行了)，发送消息的函数我已经写好了，另外建立连接的时候可以携带params参数/chatroom,?name=?&url=?。name是名字，url是头像，不携带的话就是默认的
+			// 我是懒狗不想写样式
+		</script>
+	</body>
+</html>

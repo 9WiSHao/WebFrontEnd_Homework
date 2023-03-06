@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>防抖节流</title>
+		<style>
+			.text {
+				height: 200px;
+				width: 600px;
+				border: 1px solid black;
+				word-wrap: break-word;
+			}
+
+			input {
+				margin-top: 20px;
+				border: 1px solid black;
+			}
+
+			.save1 {
+				color: gray;
+				font-size: small;
+				opacity: 0;
+				transition: all 0.5s;
+			}
+			.save2 {
+				color: gray;
+				font-size: small;
+				opacity: 1;
+				transition: all 0.5s;
+			}
+
+			h4 {
+				font-size: small;
+				color: gray;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="text"></div>
+		<input type="text" placeholder="输入文字" />
+		<button>提交</button>
+		<div class="save1">假装临时保存了输入框里的内容（</div>
+
+		<h4>防抖用在了假装临时保存，节流用在了提交只选两秒内的第一次</h4>
+	</body>
+	<script src="./2.js"></script>
+</html>

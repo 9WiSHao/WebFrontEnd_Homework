@@ -1,0 +1,27 @@
+{
+	"name": "1webpacktest",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./src/main.js",
+	"scripts": {
+		"start": "npm run build",
+		"build": "webpack --config ./webpack.config.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@babel/core": "^7.21.4",
+		"@babel/preset-env": "^7.21.4",
+		"babel-loader": "^9.1.2",
+		"css-loader": "^6.7.3",
+		"css-minimizer-webpack-plugin": "^5.0.0",
+		"eslint": "^8.37.0",
+		"eslint-webpack-plugin": "^4.0.0",
+		"html-webpack-plugin": "^5.5.0",
+		"mini-css-extract-plugin": "^2.7.5",
+		"style-loader": "^3.3.2",
+		"webpack": "^5.77.0",
+		"webpack-cli": "^5.0.1"
+	}
+}

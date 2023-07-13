@@ -156,59 +156,60 @@ proxy 的 get 里使用`product`和它的值`.price`调用`track`，在三级储
 因为每次的更新都需要调用.value，所以 ref 比较简单，只需要用 value 的 get set 就能实现自动更新，不需要像实现 reactive 那样使用 proxy 代理来拦截读取或写入
 
 ```javascript
-// 用 WeakMap 存储每个对象的依赖关系
+// 使用 WeakMap 来存储每个对象的依赖关系
 const targetMap = new WeakMap();
+
+// 当前活动的 effect 函数，默认为 null
+let activeEffect = null;
+
+// 用一个数组来实现堆栈，存储所有的 effect 函数
+let activeEffectStack = [];
+
+// effect 函数用于设置当前的活动 effect
+function effect(eff) {
+	try {
+		// 把 eff 函数添加到堆栈中，并设为当前活动的 effect
+		activeEffectStack.push(eff);
+		activeEffect = eff;
+		// 立即执行 eff 函数
+		eff();
+	} finally {
+		// 执行完 eff 函数后，把它从堆栈中移除，并恢复之前的活动 effect
+		activeEffectStack.pop();
+		activeEffect = activeEffectStack[activeEffectStack.length - 1];
+	}
+}
 
 // track 函数用于设置对象属性的依赖
 function track(target, key) {
-	// 获取对象的依赖 Map
-	let depsMap = targetMap.get(target);
-	// 如果没有，则创建一个新的 Map，并设置到 WeakMap 中
-	if (!depsMap) {
-		targetMap.set(target, (depsMap = new Map()));
+	// 只有当有活动的 effect 时才进行依赖收集
+	if (activeEffect) {
+		let depsMap = targetMap.get(target);
+		if (!depsMap) {
+			targetMap.set(target, (depsMap = new Map()));
+		}
+		let dep = depsMap.get(key);
+		if (!dep) {
+			depsMap.set(key, (dep = new Set()));
+		}
+		dep.add(activeEffect);
 	}
-	// 获取属性的依赖 Set
-	let dep = depsMap.get(key);
-	// 如果没有，则创建一个新的 Set，并设置到 Map 中
-	if (!dep) {
-		depsMap.set(key, (dep = new Set()));
-	}
-	// 添加当前的 effect 到这个属性的依赖中
-	dep.add(effect);
 }
 
 // trigger 函数用于触发对象属性的更新
 function trigger(target, key) {
-	// 获取对象的依赖 Map
 	const depsMap = targetMap.get(target);
-	// 如果没有，则直接返回
-	if (!depsMap) return;
-	// 获取属性的依赖 Set
-	const dep = depsMap.get(key);
-	// 如果存在，则运行所有的 effect
-	if (dep) {
-		dep.forEach((effect) => {
-			effect();
-		});
+	if (depsMap) {
+		const dep = depsMap.get(key);
+		if (dep) {
+			dep.forEach((effect) => {
+				effect();
+			});
+		}
 	}
 }
 
-// 当前的 effect 函数
-// 默认为空函数，在 watchEffect 中临时赋值
-let effect = () => {};
-
-// watchEffect 函数用于监听响应式对象的变化
-function watchEffect(eff) {
-	// 将 eff 赋值到 effect
-	// 这样在接下来的 reactive 对象属性读取时，就可以收集到这个依赖
-	effect = eff;
-	// 立即运行一次 eff
-	effect();
-	// 清空 effect
-	effect = () => {};
-}
-
-// ref 函数用于创建一个响应式的引用值
+// ref 函数用于创建一个可响应的对象
 function ref(raw) {
 	const r = {
 		_is_ref: true, // 添加一个标记，表示这是一个 ref 对象
@@ -231,7 +232,7 @@ const count = ref(0);
 console.log(count.value); // 0
 
 // 创建一个 effect，监听 count 的变化
-watchEffect(() => {
+effect(() => {
 	console.log(`count的值是: ${count.value}`);
 });
 
@@ -241,7 +242,7 @@ count.value++;
 
 ### computed
 
-调用了之前完成的 ref 完成，原理也不复杂
+调用了之前完成的 ref 完成
 
 ```javascript
 // 前面就是上面ref和reactive的代码
@@ -267,6 +268,9 @@ console.log(total.value, salePrice.value); // 45, 9
 product.price = 20;
 console.log(total.value, salePrice.value); // 90, 18
 ```
+
+computed 函数结合了这两个函数的功能。首先用 ref 创建了一个响应式数据 result，然后用 effect 创建了一个副作用，这个副作用的作用就是计算传入的 getter 函数，并把结果赋值给 result.value。所以当 getter 函数内部使用的任何响应式数据发生变化时，getter 函数就会被重新计算，result.value 也会被更新。
+最后，computed 函数返回这个 result，也是个响应式的（ref）。外部代码可以通过读取 result.value 来获取计算的结果，也可以通过观察 result.value 的变化来响应这个计算结果的变化。
 
 ### 感悟
 

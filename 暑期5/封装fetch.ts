@@ -19,57 +19,37 @@ interface AxiosResponse<T = any> {
 }
 
 class MyAxios {
-	// get请求，能传url或者config对象，所以重载下
-	async get<T = any>(url: string): Promise<AxiosResponse<T>>;
-	async get<T = any>(config: RequestConfig): Promise<AxiosResponse<T>>;
-	async get<T = any>(url_or_config: string | RequestConfig): Promise<AxiosResponse<T>> {
-		let config: RequestConfig;
-		if (typeof url_or_config === 'string') {
-			config = { url: url_or_config };
-		} else {
-			config = url_or_config;
-		}
-		const res: Response = await fetch(config.url);
-		return this.handleResponse<T>(res, config);
-	}
-	// post请求
-	async post<T = any>(config: RequestConfig): Promise<AxiosResponse<T>> {
-		const res: Response = await fetch(config.url, {
-			method: 'POST',
-			body: JSON.stringify(config.body),
-			headers: {
-				'Content-Type': 'application/json',
-				...config.headers,
-			},
-		});
-		return this.handleResponse<T>(res, config);
-	}
-	// put请求
-	async put<T = any>(config: RequestConfig): Promise<AxiosResponse<T>> {
-		const res: Response = await fetch(config.url, {
-			method: 'PUT',
-			body: JSON.stringify(config.body),
-			headers: {
-				'Content-Type': 'application/json',
-				...config.headers,
-			},
-		});
-		return this.handleResponse<T>(res, config);
-	}
-	// delete请求
-	async delete<T = any>(config: RequestConfig): Promise<AxiosResponse<T>> {
-		const res: Response = await fetch(config.url, {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json',
-				...config.headers,
-			},
-		});
-		return this.handleResponse<T>(res, config);
+	// 添加请求和响应拦截器数组
+	requestInterceptors: Array<(config: RequestConfig) => RequestConfig> = [];
+	responseInterceptors: Array<(response: AxiosResponse<any>) => AxiosResponse<any>> = [];
+
+	// 在发送请求前可以添加请求拦截器
+	useRequestInterceptor(interceptor: (config: RequestConfig) => RequestConfig): void {
+		this.requestInterceptors.push(interceptor);
 	}
 
-	// 处理fetch的返回值让它更像axios的返回值
-	async handleResponse<T>(res: Response, config: RequestConfig): Promise<AxiosResponse<T>> {
+	// 在收到响应后可以添加响应拦截器
+	useResponseInterceptor(interceptor: (response: AxiosResponse<any>) => AxiosResponse<any>): void {
+		this.responseInterceptors.push(interceptor);
+	}
+
+	// fetch请求调用
+	private async request<T = any>(config: RequestConfig, method: Method): Promise<AxiosResponse<T>> {
+		// 请求拦截器
+		this.requestInterceptors.forEach((interceptor) => {
+			config = interceptor(config);
+		});
+
+		const res: Response = await fetch(config.url, {
+			method,
+			body: config.body ? JSON.stringify(config.body) : undefined,
+			headers: {
+				'Content-Type': 'application/json',
+				...config.headers,
+			},
+		});
+
+		// 处理fetch的返回值让它更像axios的返回值
 		if (!res.ok) {
 			throw new Error(`${res.status} ${res.statusText}`);
 		}
@@ -79,7 +59,7 @@ class MyAxios {
 		res.headers.forEach((value: string, key: string) => {
 			headers[key] = value;
 		});
-		const axiosRes: AxiosResponse<T> = {
+		let axiosResponse: AxiosResponse<T> = {
 			data,
 			status: res.status,
 			statusText: res.statusText,
@@ -88,19 +68,73 @@ class MyAxios {
 			// 只能空着了
 			request: {},
 		};
-		return axiosRes;
+
+		// 响应拦截器
+		this.responseInterceptors.forEach((interceptor) => {
+			axiosResponse = interceptor(axiosResponse);
+		});
+
+		return axiosResponse;
+	}
+
+	// get请求，由于可以传config或者直接传url，所以重载了一下
+	async get<T = any>(url: string): Promise<AxiosResponse<T>>;
+	async get<T = any>(config: RequestConfig): Promise<AxiosResponse<T>>;
+	async get<T = any>(url_or_config: string | RequestConfig): Promise<AxiosResponse<T>> {
+		let config: RequestConfig;
+		if (typeof url_or_config === 'string') {
+			config = { url: url_or_config };
+		} else {
+			config = url_or_config;
+		}
+		return await this.request<T>(config, 'GET');
+	}
+
+	// post请求
+	async post<T = any>(config: RequestConfig): Promise<AxiosResponse<T>> {
+		return await this.request<T>(config, 'POST');
+	}
+
+	// put请求
+	async put<T = any>(config: RequestConfig): Promise<AxiosResponse<T>> {
+		return await this.request<T>(config, 'PUT');
+	}
+
+	// delete请求
+	async delete<T = any>(config: RequestConfig): Promise<AxiosResponse<T>> {
+		return await this.request<T>(config, 'DELETE');
 	}
 }
 
 const myAxios: MyAxios = new MyAxios();
 
 // 测试get
+// 添加请求拦截器，添加统一的请求头
+myAxios.useRequestInterceptor((config: RequestConfig) => {
+	config.headers = {
+		...config.headers,
+		'X-My-Custom-Header': 'CustomHeaderValue',
+	};
+	return config;
+});
+
+// 添加响应拦截器，对响应数据进行一些处理
+myAxios.useResponseInterceptor((response: AxiosResponse<any>) => {
+	// 对响应数据进行处理，这里只是简单的加了一个字段
+	response.data = {
+		...response.data,
+		fromInterceptor: '来自响应拦截器，这是ツユ的歌曲列表:',
+	};
+	return response;
+});
+
+// 发送请求，查看拦截器是否生效
 myAxios.get('http://162.14.111.196:4000/artist/songs?id=34505358').then((res: AxiosResponse) => {
 	console.log('测试get\n');
 
 	console.log(res);
+	console.log(res.data.fromInterceptor + '\n');
 
-	console.log(`${res.data.songs[0].ar[0].name}作品:\n`);
 	res.data.songs.forEach((song: any) => {
 		console.log(song.al.name);
 		if (song.tns) {
